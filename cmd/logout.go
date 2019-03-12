@@ -18,9 +18,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/fatih/color"
+	"github.com/morgulbrut/timeLogger/consts"
 	"github.com/morgulbrut/timelogger/utils"
 	"github.com/spf13/cobra"
 )
@@ -55,14 +57,16 @@ func init() {
 }
 
 func Logout() {
-	if _, err := os.Stat("time.lck"); err == nil {
+	if _, err := os.Stat(consts.TimeLockFile); err == nil {
 
-		dat, err := ioutil.ReadFile("time.lck")
+		dat, err := ioutil.ReadFile(consts.TimeLockFile)
 		if err != nil {
 			utils.Error(err.Error())
 		}
-		proj := (string(dat))
-		msg := fmt.Sprintf("%v: Logout: %s", time.Now().Format("Mon Jan 2 15:04"), proj)
+		proj := strings.TrimRight(string(dat), "\r\n")
+		logtime := time.Now().Format(consts.TimeFmtString)
+
+		msg := fmt.Sprintf("{\"project\": \"%s\", \"login\": \"\", \"logout\": \"%s\"}", proj, logtime)
 		color.Green(msg)
 		if err := utils.AppendToFile(msg, "time.log"); err != nil {
 			utils.Error(err.Error())

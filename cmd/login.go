@@ -17,9 +17,11 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/fatih/color"
+	"github.com/morgulbrut/timeLogger/consts"
 	"github.com/morgulbrut/timelogger/utils"
 	"github.com/spf13/cobra"
 )
@@ -36,7 +38,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) > 0 {
-			proj := args[0]
+			proj := strings.Join(args, " ")
 			Login(proj)
 		} else {
 			utils.Error("Project as argument needed")
@@ -60,16 +62,18 @@ func init() {
 
 func Login(proj string) {
 
-	if _, err := os.Stat("time.lck"); err == nil {
+	if _, err := os.Stat(consts.TimeLockFile); err == nil {
 		Logout()
 	}
-	if err := utils.AppendToFile(proj, "time.lck"); err != nil {
+
+	logtime := time.Now().Format(consts.TimeFmtString)
+	if err := utils.AppendToFile(proj, consts.TimeLockFile); err != nil {
 		utils.Error(err.Error())
 	}
 
-	msg := fmt.Sprintf("%v: Login: %s", time.Now().Format("Mon Jan 2 15:04"), proj)
+	msg := fmt.Sprintf("{\"project\": \"%s\", \"login\": \"%s\", \"logout\": \"\"}", proj, logtime)
 	color.Green(msg)
-	if err := utils.AppendToFile(msg, "time.log"); err != nil {
+	if err := utils.AppendToFile(msg, consts.TimeLogFile); err != nil {
 		utils.Error(err.Error())
 	}
 }
