@@ -23,7 +23,7 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/morgulbrut/timeLogger/consts"
-	"github.com/morgulbrut/timelogger/utils"
+	"github.com/morgulbrut/timeLogger/utils"
 	"github.com/spf13/cobra"
 )
 

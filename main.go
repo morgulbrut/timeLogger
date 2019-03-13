@@ -14,7 +14,7 @@
 
 package main
 
-import "github.com/morgulbrut/timelogger/cmd"
+import "github.com/morgulbrut/timeLogger/cmd"
 
 func main() {
 	cmd.Execute()
