@@ -63,10 +63,13 @@ func Logout() {
 		if err != nil {
 			utils.Error(err.Error())
 		}
-		proj := strings.TrimRight(string(dat), "\r\n")
+		log := strings.TrimRight(string(dat), "\r\n")
 		logtime := time.Now().Format(consts.TimeFmtString)
-
-		msg := fmt.Sprintf("{\"project\": \"%s\", \"login\": \"\", \"logout\": \"%s\"}", proj, logtime)
+		timeStrings := strings.Split(log, ": ")
+		timeString := timeStrings[len(timeStrings)-1]
+		loginTime, err := time.Parse(consts.TimeFmtString, timeString)
+		duration := loginTime.Sub(time.Now())
+		msg := fmt.Sprintf("%s, logout: %s, duration: %s", log, logtime, duration)
 		color.Green(msg)
 		if err := utils.AppendToFile(msg, "time.log"); err != nil {
 			utils.Error(err.Error())

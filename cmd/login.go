@@ -67,11 +67,7 @@ func Login(proj string) {
 	}
 
 	logtime := time.Now().Format(consts.TimeFmtString)
-	if err := utils.AppendToFile(proj, consts.TimeLockFile); err != nil {
-		utils.Error(err.Error())
-	}
-
-	msg := fmt.Sprintf("{\"project\": \"%s\", \"login\": \"%s\", \"logout\": \"\"}", proj, logtime)
+	msg := fmt.Sprintf("project: %s, login: %s", proj, logtime)
 	color.Green(msg)
 	if err := utils.AppendToFile(msg, consts.TimeLockFile); err != nil {
 		utils.Error(err.Error())
