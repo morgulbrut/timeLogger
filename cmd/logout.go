@@ -64,12 +64,16 @@ func Logout() {
 			utils.Error(err.Error())
 		}
 		log := strings.TrimRight(string(dat), "\r\n")
-		logtime := time.Now().Format(consts.TimeFmtString)
-		timeStrings := strings.Split(log, ": ")
+		logtime := time.Now()
+		timeStrings := strings.Split(log, ";")
 		timeString := timeStrings[len(timeStrings)-1]
 		loginTime, err := time.Parse(consts.TimeFmtString, timeString)
-		duration := loginTime.Sub(time.Now())
-		msg := fmt.Sprintf("%s, logout: %s, duration: %s", log, logtime, duration)
+		fmt.Println(loginTime)
+		fmt.Println(logtime)
+		duration := logtime.Sub(loginTime)
+		durString := fmt.Sprintf("%d:%02d", int(duration.Minutes()/60), int(duration.Minutes())%60)
+		msg := fmt.Sprintf("Projekt: %s, login:%s, logout: %s, duration: %s", timeStrings[1],
+			logtime.Format(consts.TimeLogFmtString), loginTime.Format(consts.TimeLogFmtString), durString)
 		color.Green(msg)
 		if err := utils.AppendToFile(msg, "time.log"); err != nil {
 			utils.Error(err.Error())
