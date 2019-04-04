@@ -56,8 +56,6 @@ func Logout() {
 		timeStrings := strings.Split(log, ";")
 		timeString := timeStrings[len(timeStrings)-1]
 		loginTime, err := time.Parse(consts.TimeFmtString, timeString)
-		fmt.Println(loginTime)
-		fmt.Println(logtime)
 		duration := logtime.Sub(loginTime)
 		durString := fmt.Sprintf("%d:%02d", int(duration.Minutes()/60), int(duration.Minutes())%60)
 		msg := fmt.Sprintf("Projekt: %s, login:%s, logout: %s, duration: %s", timeStrings[1],
