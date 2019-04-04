@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fatih/color"
+	"github.com/morgulbrut/color"
 	"github.com/morgulbrut/timeLogger/consts"
 	"github.com/morgulbrut/timeLogger/utils"
 	"github.com/spf13/cobra"

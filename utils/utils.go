@@ -11,7 +11,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/fatih/color"
+	"github.com/morgulbrut/color"
 )
 
 // Error prints an error and quits the programm
