@@ -46,6 +46,7 @@ func init() {
 	// loginCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
+// Login starts time logging. If it already is logging, it stops it first"
 func Login(proj string) {
 
 	if _, err := os.Stat(consts.TimeLockFile); err == nil {

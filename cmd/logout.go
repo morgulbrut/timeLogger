@@ -43,6 +43,7 @@ func init() {
 	// logoutCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
+// Logout stops logging and writes times to log file
 func Logout() {
 	if _, err := os.Stat(consts.TimeLockFile); err == nil {
 
