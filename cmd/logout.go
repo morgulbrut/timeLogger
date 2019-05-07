@@ -31,16 +31,6 @@ var logoutCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(logoutCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// logoutCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// logoutCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 // Logout stops logging and writes times to log file
@@ -51,6 +41,19 @@ func Logout() {
 		if err != nil {
 			utils.Error(err.Error())
 		}
+
+		// if file dont exist add ne file
+		_, err = os.Stat(consts.TimeLogFile)
+		if err == nil {
+			// empty because
+		} else if os.IsNotExist(err) {
+			if err := utils.AppendToFile("Project, Login, Logout, Duration", consts.TimeLogFile); err != nil {
+				utils.Error(err.Error())
+			}
+		} else {
+			color.HiRed("file %s stat error: %v", consts.TimeLogFile, err)
+		}
+
 		log := strings.TrimRight(string(dat), "\r\n")
 		logtime := time.Now()
 		timeStrings := strings.Split(log, ";")
@@ -58,13 +61,13 @@ func Logout() {
 		loginTime, err := time.Parse(consts.TimeFmtString, timeString)
 		duration := logtime.Sub(loginTime)
 		durString := fmt.Sprintf("%d:%02d", int(duration.Minutes()/60), int(duration.Minutes())%60)
-		msg := fmt.Sprintf("Projekt: %s, login:%s, logout: %s, duration: %s", timeStrings[1],
-			logtime.Format(consts.TimeLogFmtString), loginTime.Format(consts.TimeLogFmtString), durString)
+		msg := fmt.Sprintf("%s, %s, %s, %s", timeStrings[1],
+			loginTime.Format(consts.TimeLogFmtString), logtime.Format(consts.TimeLogFmtString), durString)
 		color.Green(msg)
-		if err := utils.AppendToFile(msg, "time.log"); err != nil {
+		if err := utils.AppendToFile(msg, consts.TimeLogFile); err != nil {
 			utils.Error(err.Error())
 		}
-		os.Remove("time.lck")
+		os.Remove(consts.TimeLockFile)
 	} else {
 		utils.Error("Not logged in")
 	}

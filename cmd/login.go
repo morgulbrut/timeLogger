@@ -34,16 +34,6 @@ var loginCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(loginCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// loginCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// loginCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 // Login starts time logging. If it already is logging, it stops it first"
@@ -54,7 +44,7 @@ func Login(proj string) {
 	}
 
 	logtime := time.Now().Format(consts.TimeFmtString)
-	msg := fmt.Sprintf("Projekt;%s;login;%s", proj, logtime)
+	msg := fmt.Sprintf("project;%s;login;%s", proj, logtime)
 	color.Green(msg)
 	if err := utils.AppendToFile(msg, consts.TimeLockFile); err != nil {
 		utils.Error(err.Error())
