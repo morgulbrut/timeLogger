@@ -15,7 +15,7 @@ import (
 // showCmd represents the show command
 var showCmd = &cobra.Command{
 	Use:   "show",
-	Short: "shows data from the timelog",
+	Short: "Shows data from the log",
 }
 
 func init() {
