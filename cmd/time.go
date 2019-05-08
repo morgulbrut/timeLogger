@@ -46,8 +46,8 @@ func getTime(project string) float64 {
 	for r.Read(&entry) {
 		if entry.Project == project {
 			color.Yellow("%s", entry.Time)
-			h, _ := strconv.ParseFloat(strings.Split(entry.Time, ":")[0], 64)
-			m, _ := strconv.ParseFloat(strings.Split(entry.Time, ":")[1], 64)
+			h, _ := strconv.ParseFloat(strings.TrimSpace(strings.Split(entry.Time, ":")[0]), 64)
+			m, _ := strconv.ParseFloat(strings.TrimSpace(strings.Split(entry.Time, ":")[1]), 64)
 
 			time += h + m/60
 		}
