@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/morgulbrut/color"
+	"github.com/morgulbrut/timeLogger/consts"
 	"github.com/morgulbrut/timeLogger/utils"
 	"github.com/spf13/cobra"
 )
@@ -28,10 +30,15 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) > 1 {
-			time := args[0]
-			proj := strings.Join(args, " ")
-			fmt.Println(time)
-			fmt.Println(proj)
+			dur := args[len(args)-1]
+			pr := args[:len(args)-1]
+			proj := strings.Join(pr, " ")
+
+			msg := fmt.Sprintf("%s, , , %s", proj, dur)
+			color.Green(msg)
+			if err := utils.AppendToFile(msg, consts.TimeLogFile); err != nil {
+				utils.Error(err.Error())
+			}
 		} else {
 			utils.Error("Time and Project as argument needed")
 		}
