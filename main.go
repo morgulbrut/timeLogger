@@ -8,8 +8,12 @@ as published by Sam Hocevar. See the LICENSE file or
 
 package main
 
-import "github.com/morgulbrut/timeLogger/cmd"
+import (
+	"github.com/morgulbrut/timeLogger/cmd"
+	"github.com/spf13/cobra"
+)
 
 func main() {
+	cobra.MousetrapHelpText = ""
 	cmd.Execute()
 }
