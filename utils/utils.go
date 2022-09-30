@@ -11,12 +11,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/morgulbrut/color"
+	"github.com/morgulbrut/color256"
 )
 
 // Error prints an error and quits the programm
 func Error(err string) {
-	color.Red(fmt.Sprintf("ERROR: %s", err))
+	color256.PrintHiRed(fmt.Sprintf("ERROR: %s", err))
 	os.Exit(1)
 }
 

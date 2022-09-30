@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/morgulbrut/color"
+	"github.com/morgulbrut/color256"
 	"github.com/morgulbrut/timeLogger/consts"
 	"github.com/morgulbrut/timeLogger/utils"
 	"github.com/spf13/cobra"
@@ -46,7 +46,7 @@ func Login(proj string) {
 
 	logtime := time.Now().Format(consts.TimeFmtString)
 	msg := fmt.Sprintf("project;%s;login;%s", proj, logtime)
-	color.Green(msg)
+	color256.PrintHiGreen(msg)
 	if err := utils.AppendToFile(msg, consts.TimeLockFile); err != nil {
 		utils.Error(err.Error())
 	}

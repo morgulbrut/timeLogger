@@ -15,7 +15,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/morgulbrut/color"
+	"github.com/morgulbrut/color256"
 	"github.com/morgulbrut/timeLogger/consts"
 	"github.com/morgulbrut/timeLogger/utils"
 	"github.com/spf13/cobra"
@@ -52,7 +52,7 @@ func Logout() {
 				utils.Error(err.Error())
 			}
 		} else {
-			color.HiRed("file %s stat error: %v", consts.TimeLogFile, err)
+			color256.PrintHiRed("file %s stat error: %v", consts.TimeLogFile, err)
 		}
 
 		log := strings.TrimRight(string(dat), "\r\n")
@@ -64,7 +64,7 @@ func Logout() {
 		durString := fmt.Sprintf("%d:%02d", int(duration.Minutes()/60), int(duration.Minutes())%60)
 		msg := fmt.Sprintf("%s, %s, %s, %s", timeStrings[1],
 			loginTime.Format(consts.TimeLogFmtString), logtime.Format(consts.TimeLogFmtString), durString)
-		color.Green(msg)
+		color256.PrintHiGreen(msg)
 		if err := utils.AppendToFile(msg, consts.TimeLogFile); err != nil {
 			utils.Error(err.Error())
 		}
